@@ -176,10 +176,10 @@ ORDER BY
 
 | Segment        | total_sales | total_profit | avg_shipping_costs | total_shipping_costs |
 |:--------------:|:-----------:|:------------:|:------------------:|:--------------------:|
-| Standard Class | 5,068,314   | 581,112      | 20.038             | 418350.268           |
-| Second Class   | 1,800,690   | 222,094      | 30.551             | 217828.872           |
-| First Class    | 1,303,732   | 150,822      | 40.307             | 209839.481           |
-| Same Day       | 427,346     | 54,305       | 40.581             | 74992.958            |
+| Standard Class | 5,068,314   | 581,112      | 20.038             | 418,350.268          |
+| Second Class   | 1,800,690   | 222,094      | 30.551             | 217,828.872          |
+| First Class    | 1,303,732   | 150,822      | 40.307             | 209,839.481          |
+| Same Day       | 427,346     | 54,305       | 40.581             | 74,992.958           |
 
 Standard Class shipping is the most commonly chosen shipping mode, driving the highest sales and profit with the lowest average shipping cost. 
 Faster modes like First Class and Same Day shipping have much higher average shipping costs but contribute relatively little to sales or profit, suggesting customers prefer affordable delivery over speed. 
