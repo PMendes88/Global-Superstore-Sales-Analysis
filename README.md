@@ -2,22 +2,24 @@
 
 # Overview
 
-A beginning-to-end analysis of the Global Superstore dataset during the years 2011-2014 using SQL and Power BI to uncover insights into sales, profit, customer segments, shipping methods, and others. This project was created to practice full workflow skills in SQL querying, data cleaning, and data visualization.
+A beginning-to-end analysis of the Global Superstore dataset during the years 2011-2014 using SQL and Power BI to uncover insights into sales, profit, customer, segments, shipping methods, and others. This project was created to practice full workflow skills in SQL querying, data cleaning, and data visualization.
 
 # Main files to explore:
 
 - README.md → project explanation
 - Power BI dashboard → powerbi/visualisations.pbix
-- SQL queries → sql/sql_queries.sql
+- SQL queries → sql/...
 
 # Dataset
 
+The data for the Global-Superstore analysis was gathered from Kaggle which contains several different useful parameters for analysis including clients, sales, profit, order date, category, segment, region, country, shipping cost, among many others.
 - File: superstore.csv
 - Source: Kaggle
 - Rows / Columns: 102,580 rows × 26 columns
 
 # Questions
 
+These are some of the questions that I self-imposed in order to practice my data analysis skill-set.
 1. Which product categories generate the most sales and profit?
 2. What is the monthly revenue trend over time for the latest year?
 3. Which customer segment is most profitable?
@@ -43,14 +45,14 @@ In order to find out which product categories are the most advantageous in terms
 SELECT
     category,
     SUM(sales) AS total_revenue,
-    ROUND(SUM(profit)) AS total_profit_pounds
+    ROUND(SUM(profit)) AS total_profit
 FROM
     orders
 GROUP BY
     category
 ORDER BY
     total_revenue DESC
---    total_profit_pounds DESC
+--    total_profit DESC
 ```
 
 | Category        | total_revenue | total_profit |
@@ -61,27 +63,27 @@ ORDER BY
 
 The product categories that generate the most ammount of revenue is technology, closely followed up by furniture and office supplies.
 However, when we look at profit, technology leads and furniture is the least profitable category by a significant margin.
-This indicates that while furniture generates a lot of revenue, its profit margins are lower compared to technology and office supplies.
+This indicates that while furniture still generates a lot of revenue, its profit margins are lower compared to technology and office supplies.
 
 ## 2. What is the monthly revenue trend over time for the latest year?
 
-In order to have a clearer picture of this trend, it was necessary to separate the extract and separate the date hierarchy adding them as new columns into the database
+In order to have a clearer picture of this trend, it was necessary to extract and separate the date hierarchy, adding them as new columns into the database in their separate forms.
 
 ```sql
--- Step 1: Add new columns for year, month, and day
+-- Add new columns for year, month, and day
 ALTER TABLE orders
 ADD COLUMN order_year INT,
 ADD COLUMN order_month INT,
 ADD COLUMN order_day INT;
 
--- Step 2: Populate the new columns with extracted values from order_date
+-- Populate the new columns with extracted values from order_date
 UPDATE orders
 SET 
     order_year  = EXTRACT(YEAR FROM order_date),
     order_month = EXTRACT(MONTH FROM order_date),
     order_day   = EXTRACT(DAY FROM order_date);
 
--- Step 3: Delete previous YEAR column
+-- Delete previous YEAR column
 ALTER TABLE orders
 DROP COLUMN YEAR
 ```
@@ -105,7 +107,7 @@ ORDER BY
 |:---------------:|:-------------:|
 | 11              | 1110624       |
 | 12              | 1006308       |
-| 9               |  962372       | 
+| 9               | 962372        | 
 | 8               | 913266        |
 | 10              | 845570        |
 | 6               | 803686        |
@@ -117,10 +119,9 @@ ORDER BY
 | 2               | 369696        |
 
 The monthly revenue trend for 2014 shows fluctuations throughout the year.
-Notably, there is a significant peak in November and December, likely due to holiday shopping.
-This suggests that seasonal factors play a crucial role in revenue generation.
+Notably, there is a significant peak in November and December, likely due to holiday shopping which suggests that seasonal factors may play a crucial role in revenue generation.
 
-## 3. Which customer segment is most profitable?
+## 3. Which customer segment is the most profitable?
 
 To know which of the three customer segments is the most profitable I grouped the segments and filtered them by profit and revenue, also adding the profit margin for a more clear and concise picture.
 
@@ -146,12 +147,12 @@ ORDER BY
 
 The customer segment with the highest profit margin is the Home Office segment, indicating that this segment is the most profitable relative to its sales.
 This suggests that focusing marketing and sales efforts on the Home Office segment could be beneficial for maximizing profitability.
-However, the Consumer segment is the growth driver with the highest revenue and profit volume.
-The profit margin for all segments is close, indicating that each segment contributes similarly to overall profitability.
+However, the Consumer segment is the growth driver, with the highest revenue and profit volume.
+The profit margin for all segments is very close, indicating that each segment contributes similarly to overall profitability.
 
 ## 4. How does shipping mode impact sales and profit in the latest year?
 
-In order to tackle this question I had to put side by side the total sales, profit and shipping costs (average and total) for value comparison.
+In order to tackle this question I had to put side by side the total sales, profit, and shipping costs (average and total) for value comparison.
 
 
 ```sql
@@ -186,7 +187,7 @@ Second Class falls in between, showing some demand for faster delivery at a mode
 
 ## 5. Which countries/regions are the top contributors to revenue?
 
-For this measurement, I listed the top 10 countries regarding the total sales and profit and ordered the list by year in order to assess the consistency of regional markets throughout the timespan of our data.
+For this measurement, I listed the top 10 countries regarding total sales and profit, and ordered the list by profit in order to assess the consistency of regional markets throughout the timespan of our data.
 
 ```sql
 SELECT
@@ -216,28 +217,23 @@ LIMIT 10
 | Germany        |   433,066   |  71,912.09   | 2014 |
 | France         |   616,874   |  70,284.22   | 2014 |
 
-Clearly, the countries with the highest profits are the most significant markets for the business.
+Clearly, the countries with the highest profits are the most significant markets for the business, and the USA consistently shows the highest profits, indicating a strong market presence thoughout the years.
+However, new markets like India, China, and regionally Europe, are emerging as significant contributors to profit, suggesting potential growth opportunities.
 
-More clearly, the visualisations in Power B.I. paint a clearer global picture in this time frame.
+The visualisations in Power B.I. paint a clearer global picture in this time frame.
 
-![Visualisation of countries and regions with the highest profits globally from 2011-2014](3_Project/skill_demand_all_data_roles.png)
+![Global Superstore Dashboard](dashboard_screenshots/global.png)
 
-The USA consistently shows the highest profits, indicating a strong market presence thoughout the years.
-However, new markets like India, China and Europe are emerging as significant contributors to profit, suggesting potential growth opportunities.
 
 The top contributors to revenue are primarily the United States, major European markets (such as Germany, France, and the UK), and countries in the Asia-Pacific region (including India, China, and Australia).
 At a regional level, APAC, Europe, and the US are the leading markets, while LATAM and Africa contribute less in comparison.
 
-# Key KPIs & Visuals
+# Key KPIs
 
-The analysis includes the following core metrics and visuals:
+The analysis includes the following global core metrics and visuals that can be seen in the image above as well as in the *.pbix file to get deeper understandings on the variation throughout time:
 
-- Total Revenue
-- Total Profit
-- Sum of Sales
-- Average Profit Margin (Total)
-- Average Profit Margin (Per Sale)
-- Number of Customers
-
-Additional visualizations cover revenue trends over time, geographical performance, and profitability by category and customer segment.
-
+- Total Revenue: 25M 
+- Total Profit: 2.93M
+- Average Profit Margin (total): 11.61%
+- Average Profit Margin (per sale): 4.72%
+- Number of Customers: 5K
