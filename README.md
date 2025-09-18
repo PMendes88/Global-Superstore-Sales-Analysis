@@ -141,9 +141,9 @@ ORDER BY
 
 | Segment        | total_revenue | total_profit | profit _margin_percentage |
 |:--------------:|:-------------:|:------------:|:-------------------------:|
-| Home Office    | 4,619,912     | 554018       | 11.992                    |
-| Corporate      | 7,649,616     | 882416       | 11.535                    |
-| Consumer       | 13,016,282    | 1498480      | 11.512                    |
+| Home Office    | 4,619,912     | 554,018      | 11.992                    |
+| Corporate      | 7,649,616     | 882,416      | 11.535                    |
+| Consumer       | 13,016,282    | 1,498,480    | 11.512                    |
 
 The customer segment with the highest profit margin is the Home Office segment, indicating that this segment is the most profitable relative to its sales.
 This suggests that focusing marketing and sales efforts on the Home Office segment could be beneficial for maximizing profitability.
