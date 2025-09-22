@@ -10,12 +10,68 @@ A beginning-to-end analysis of the Global Superstore dataset during the years 20
 - Power BI dashboard → powerbi/visualisations.pbix
 - SQL queries → sql/...
 
+# Tools used
+
+- PostgreSQL
+- VSCode
+- Power B.I.
+I used PostgreSQL as the database management system connected to VSCode that I used as my IDE. This powerful combination of systems allowed me to not only create the database but also clean it and extract some preliminary insights by doing exploratory data analysis while Power B.I. allowed me to derive the visualisations needed supported by DAX.
+
 # Dataset
 
 The data for the Global-Superstore analysis was gathered from Kaggle which contains several different useful parameters for analysis including clients, sales, profit, order date, category, segment, region, country, shipping cost, among many others.
 - File: superstore.csv
 - Source: Kaggle
 - Rows / Columns: 102,580 rows × 26 columns
+
+To assess the quality and integrity of the data, the following checks were done:
+- Check for missing values on the table
+```sql
+-- SQL query to check for null values in any column of the 'orders' table
+SELECT COUNT(*) AS rows_with_nulls
+FROM orders
+WHERE 
+    Category IS NULL
+ OR city IS NULL
+ OR country IS NULL
+ OR customer_ID IS NULL
+ OR customer_Name IS NULL
+ OR discount IS NULL
+ OR market_1 IS NULL
+ OR number_of_records IS NULL
+ OR order_date IS NULL
+ OR order_ID IS NULL
+ OR order_priority IS NULL
+ OR product_id IS NULL
+ OR product_name IS NULL
+ OR quantity IS NULL
+ OR region IS NULL
+ OR row_id IS NULL
+ OR sales IS NULL
+ OR segment IS NULL
+ OR ship_date IS NULL
+ OR ship_mode IS NULL
+ OR shipping_cost IS NULL
+ OR state IS NULL
+ OR sub_category IS NULL
+ OR market_2 IS NULL
+ OR week_number IS NULL
+ OR year IS NULL
+ ```
+| rows_with_nulls|
+|:--------------:|
+| 0              |
+
+- Check if the order date and shipping dates are correctly assessed (order date must be prior to the shipping date)
+```sql
+-- Ensure all ship dates come on or after the order date
+SELECT COUNT(*) AS bad_dates
+FROM orders
+WHERE Ship_Date < Order_Date;
+```
+| bad_dates      |
+|:--------------:|
+| 0              |
 
 # Questions
 
@@ -25,14 +81,6 @@ These are some of the questions that I self-imposed in order to practice my data
 3. Which customer segment is most profitable?
 4. How does shipping mode impact sales and costs in the latest year?
 5. Which countries/regions are the top contributors to revenue?
-
-# Tools used
-
-- PostgreSQL
-- VSCode
-- Power B.I.
-
-I used PostgreSQL as the database management system connected to VSCode that I used as my IDE. This powerful combination of systems allowed me to not only create the database but also clean it and extract some preliminary insights by doing exploratory data analysis while Power B.I. allowed me to derive the visualisations needed supported by DAX.
 
 # The Analysis
 
@@ -85,7 +133,7 @@ SET
 
 -- Delete previous YEAR column
 ALTER TABLE orders
-DROP COLUMN YEAR
+DROP COLUMN year
 ```
 From there we can now proceed to the desired query which in this case is a monthly analysis of the latest year which is 2014
 
