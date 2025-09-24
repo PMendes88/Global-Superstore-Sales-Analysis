@@ -270,7 +270,7 @@ However, new markets like India, China, and regionally Europe, are emerging as s
 
 The visualisations in Power B.I. paint a clearer global picture in this time frame.
 
-![Global Superstore Dashboard](dashboard_screenshots/global.png)
+![Global Superstore Dashboard](dashboard_screenshots/global1.png)
 
 
 The top contributors to revenue are primarily the United States, major European markets (such as Germany, France, and the UK), and countries in the Asia-Pacific region (including India, China, and Australia).
