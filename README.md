@@ -15,6 +15,7 @@ A beginning-to-end analysis of the Global Superstore dataset during the years 20
 - PostgreSQL
 - VSCode
 - Power B.I.
+
 I used PostgreSQL as the database management system connected to VSCode that I used as my IDE. This powerful combination of systems allowed me to not only create the database but also clean it and extract some preliminary insights by doing exploratory data analysis while Power B.I. allowed me to derive the visualisations needed supported by DAX.
 
 # Dataset
